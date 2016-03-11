@@ -14,11 +14,13 @@
 #include <opencv/cv.h>
 #include <opencv2/highgui/highgui.hpp>
 
-#include <pcl/ros/conversions.h>
+// #include <pcl/ros/conversions.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/kdtree/kdtree_flann.h>
+#include <pcl_conversions/pcl_conversions.h>
+
 
 const double PI = 3.1415926;
 const double rad2deg = 180 / PI;
@@ -194,8 +196,7 @@ void laserCloudLastHandler(const sensor_msgs::PointCloud2ConstPtr& laserCloudLas
   timeLaserCloudLast = laserCloudLast2->header.stamp.toSec();
 
   laserCloudLast->clear();
-  pcl::fromROSMsg(*laserCloudLast2, *laserCloudLast);
-
+  //pcl::fromROSMsg(*laserCloudLast2, *laserCloudLast);
   newLaserCloudLast = true;
 }
 
