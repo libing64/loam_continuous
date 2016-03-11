@@ -2,13 +2,22 @@
 
   <arg name="rviz" default="true" />
 
-  <node pkg="loam_continuous" type="scanRegistration" name="scanRegistration" output="screen"/>
+  <include file="$(find hector_laserscan_to_pointcloud)/launch/laserscan_to_pointcloud_shadow_filtered.launch" >  
+  </include>
+
+
+  <node pkg="loam_continuous" type="scanRegistration" name="scanRegistration" output="screen">
+  	<remap from="/sync_scan_cloud_filtered" to="/scan_cloud" />
+  	<remap from="/microstrain/imu" to="/raw_imu" />	
+  </node>
+
+
   <node pkg="loam_continuous" type="laserOdometry" name="laserOdometry" output="screen"/>
   <node pkg="loam_continuous" type="laserMapping" name="laserMapping" output="screen"/>
   <node pkg="loam_continuous" type="transformMaintenance" name="transformMaintenance" output="screen"/>
 
-  <group if="$(arg rviz)">
+<!--   <group if="$(arg rviz)">
     <node launch-prefix="nice" pkg="rviz" type="rviz" name="rviz" args="-d $(find loam_continuous)/rviz_cfg/loam_continuous.vcg"/>
-  </group>
+  </group> -->
 
 </launch>
